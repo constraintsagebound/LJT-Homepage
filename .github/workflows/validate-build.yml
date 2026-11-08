@@ -20,3 +20,22 @@ jobs:
         run: bundle exec jekyll build --baseurl "/LJT-Homepage"
         env:
           JEKYLL_ENV: production
+      - name: Verify rendered content
+        run: |
+          set -e
+          test -f _site/index.html
+          test -f _site/publications/index.html
+          for t in "SynLogic" "Perception Bottleneck" "Universal Truthfulness Hyperplane" "In-Context Sharpness" "C-Eval" "Composing Parameter-Efficient Modules"; do
+            grep -q "$t" _site/index.html && echo "HOME OK: $t"
+            grep -q "$t" _site/publications/index.html && echo "PUBS OK: $t"
+          done
+          grep -q "jliugi@connect.ust.hk" _site/index.html && echo "HOME OK: email"
+          grep -q "Vicent0205" _site/index.html && echo "HOME OK: github"
+          grep -q "junteng88716710" _site/index.html && echo "HOME OK: x account"
+          grep -q "MINIMAX" _site/index.html && echo "HOME OK: minimax"
+          grep -q "Tencent WXG" _site/index.html && echo "HOME OK: tencent"
+          grep -q "Shanghai AI Lab" _site/index.html && echo "HOME OK: shanghai ai lab"
+          grep -q "Zhiyuan Honor Scholarship" _site/index.html && echo "HOME OK: scholarship"
+          grep -q "LLM Reasoning and Reinforcement Learning" _site/index.html && echo "HOME OK: interest 1"
+          grep -q "Hallucination in Vision-Language Models" _site/index.html && echo "HOME OK: interest 2"
+          grep -q "LLM Truthfulness and Interpretability" _site/index.html && echo "HOME OK: interest 3"
